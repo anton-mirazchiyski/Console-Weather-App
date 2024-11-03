@@ -48,19 +48,36 @@ def get_current_weather_info_from_coordinates(latitude, longitude):
 
     for key, value in data.items():
         if key == 'weather':
-            weather_info[key] = value
+            weather = value[0].get('main')
+            weather_info['Weather'] = weather
+            description = value[0].get('description')
+            weather_info['Description'] = description.capitalize()
         if key == 'main':
-            weather_info[key] = value
+            temperature = value.get('temp')
+            weather_info['Temperature'] = f'{temperature} degrees Celsius'
+            humidity = value.get('humidity')
+            weather_info['Humidity'] = humidity
             break
 
     return weather_info
 
 
+def print_weather_info_of_a_city(weather_info, city_name):
+    print(f'\nCurrent weather of {city_name}:\n')
+
+    for key, value in weather_info.items():
+        if key != 'Weather':
+            print(f'{key}: {value}')
+        else:
+            print(value)
+
+
 def main():
     user_input = get_user_input()
-    city_name = user_input.upper()
+    city_name = user_input.capitalize()
     latitude, longitude = get_city_coordinates_from_city_name(city_name)
     weather_info = get_current_weather_info_from_coordinates(latitude, longitude)
+    print_weather_info_of_a_city(weather_info, city_name)
 
 
 if __name__ == '__main__':
