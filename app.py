@@ -43,14 +43,24 @@ def get_current_weather_info_from_coordinates(latitude, longitude):
 
     response = requests.get(url, params=params_dict)
     data = response.json()
-    print(data)
+
+    weather_info = {}
+
+    for key, value in data.items():
+        if key == 'weather':
+            weather_info[key] = value
+        if key == 'main':
+            weather_info[key] = value
+            break
+
+    return weather_info
 
 
 def main():
     user_input = get_user_input()
     city_name = user_input.upper()
     latitude, longitude = get_city_coordinates_from_city_name(city_name)
-    get_current_weather_info_from_coordinates(latitude, longitude)
+    weather_info = get_current_weather_info_from_coordinates(latitude, longitude)
 
 
 if __name__ == '__main__':
