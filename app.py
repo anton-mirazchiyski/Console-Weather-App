@@ -36,10 +36,21 @@ def get_city_coordinates_from_city_name(city_name):
 
     return latitude, longitude
 
+
+def get_current_weather_info_from_coordinates(latitude, longitude):
+    url = 'https://api.openweathermap.org/data/2.5/weather'
+    params_dict = {'lat': latitude, 'lon': longitude, 'appid': API_key, 'units': 'metric'}
+
+    response = requests.get(url, params=params_dict)
+    data = response.json()
+    print(data)
+
+
 def main():
     user_input = get_user_input()
     city_name = user_input.upper()
     latitude, longitude = get_city_coordinates_from_city_name(city_name)
+    get_current_weather_info_from_coordinates(latitude, longitude)
 
 
 if __name__ == '__main__':
