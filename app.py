@@ -9,7 +9,10 @@ API_key = os.getenv('WEATHER_API_KEY')
 
 
 def validate_user_input(city_name):
-    return city_name.isalpha()
+    valid_characters = [' ', '\'', '-', '.']
+
+    return (city_name[0].isalnum() and
+            all([char.isalnum() or char in valid_characters for char in city_name]))
 
 
 def get_user_input(text='Enter city name: '):
@@ -63,7 +66,7 @@ def get_current_weather_info_from_coordinates(latitude, longitude):
 
 
 def print_weather_info_of_a_city(weather_info, city_name):
-    print(f'\nCurrent weather of {city_name}:\n')
+    print(f'\nCurrent weather of {city_name.title()}:\n')
 
     for key, value in weather_info.items():
         if key != 'Weather':
